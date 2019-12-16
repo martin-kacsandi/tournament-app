@@ -26,10 +26,10 @@ export default {
     teams: function () {
       this.items = []
       Object.keys(this.teams).forEach(key => {
-        let item = {
+        let myitem = {
           name: Object.values(this.teams)[key].name
         }
-        this.items.push(item)
+        this.items.push(myitem)
       })
     }
   },
