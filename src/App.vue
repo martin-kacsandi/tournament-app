@@ -1,9 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <b-nav pills align="right">
+      <b-nav-item to="/tournaments">
+        Tournaments
+      </b-nav-item>
+      <b-nav-item to="/teams">
+        Teams
+      </b-nav-item>
+    </b-nav>
     <router-view/>
   </div>
 </template>
