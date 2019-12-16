@@ -4,7 +4,7 @@
     <b-container>
       <b-table class="mt-3" outlined hover :items="items" :fields="fields">
         <template v-slot:cell(name)="data">
-          <a :href="data.item.id">{{ data.value }}</a>
+          <a :href="data.item.route">{{ data.value }}</a>
         </template>
       </b-table>
     </b-container>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { db } from '../db'
+import { db } from '../../firebase/db'
 import * as moment from 'moment'
 
 export default {
@@ -21,26 +21,21 @@ export default {
   data () {
     return {
       fields: [ 'name', 'private', 'date' ],
-      items: [],
-      tournaments: []
+      items: []
     }
   },
-  watch: {
-    tournaments: function () {
-      this.items = []
-      Object.keys(this.tournaments).forEach(key => {
-        let item = {
-          id: `/tournaments/${(Object.values(this.tournaments)[key].id).toLowerCase()}`,
-          name: Object.values(this.tournaments)[key].name,
-          private: Object.values(this.tournaments)[key].private ? 'Yes' : 'No',
-          date: moment((Object.values(this.tournaments)[key].date).toDate()).format('YYYY. MM. DD. hh:mm')
+  created () {
+    db.collection('tournaments').get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const data = {
+          name: doc.data().name,
+          private: doc.data().private ? 'Yes' : 'No',
+          date: moment(doc.data().date.toDate()).format('YYYY. MM. DD. hh:mm'),
+          route: `/tournaments/${doc.data().name}`
         }
-        this.items.push(item)
+        this.items.push(data)
       })
-    }
-  },
-  firestore: {
-    tournaments: db.collection('tournaments')
+    })
   }
 }
 </script>

@@ -13,36 +13,26 @@
 </template>
 
 <script>
-import { db } from '../db'
+import { db } from '../../firebase/db'
 
 export default {
   name: 'teams',
   data () {
     return {
       fields: [ 'name' ],
-      items: [],
-      teams: []
+      items: []
     }
   },
-  watch: {
-    teams: function () {
-      this.items = []
-      Object.keys(this.teams).forEach(key => {
-        let item = {
-          name: Object.values(this.teams)[key].name,
-          shortName: `/teams/${(Object.values(this.teams)[key].shortName).toLowerCase()}`
+  created () {
+    db.collection('teams').get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const data = {
+          name: doc.data().name,
+          shortName: `/teams/${(doc.data().shortName).toLowerCase()}`
         }
-        this.items.push(item)
+        this.items.push(data)
       })
-    }
-  },
-  methods: {
-    routeToPage: function (name) {
-      this.$router.push({ path: '/team/' + name })
-    }
-  },
-  firestore: {
-    teams: db.collection('teams')
+    })
   }
 }
 </script>
