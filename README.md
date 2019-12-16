@@ -1,5 +1,6 @@
 
-# tournament_app
+# tournament-app
+A platform to create e-sport tournament match ups and track games
 
 ## Project setup
 ```
@@ -23,5 +24,4 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-# tournament-app
-A platform to create e-sport tournament match ups and track games
+
