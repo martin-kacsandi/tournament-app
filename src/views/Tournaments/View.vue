@@ -1,7 +1,7 @@
 <template>
-  <div class="team-container">
+  <div class="tournament-container">
     <b-container>
-      <h1>This is team {{ $route.params.shortName }}</h1>
+      <h1>This is tournament {{ $route.params.id }}</h1>
     </b-container>
   </div>
 </template>
@@ -10,26 +10,26 @@
 import { db } from '../db'
 
 export default {
-  name: 'team',
+  name: 'tournament',
   data () {
     return {
       items: [],
-      teams: []
+      tournaments: []
     }
   },
   watch: {
     teams: function () {
       this.items = []
-      Object.keys(this.teams).forEach(key => {
+      Object.keys(this.tournaments).forEach(key => {
         let item = {
-          name: Object.values(this.teams)[key].name
+          name: Object.values(this.tournaments)[key].name
         }
         this.items.push(item)
       })
     }
   },
   firestore: {
-    teams: db.collection('teams')
+    tournaments: db.collection('tournaments')
   }
 }
 </script>

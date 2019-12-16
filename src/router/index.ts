@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Tournaments from '../views/Tournaments/Index.vue'
+import Tournament from '../views/Tournaments/View.vue'
 import Teams from '../views/Teams/Index.vue'
 import Team from '../views/Teams/View.vue'
 
@@ -19,9 +20,14 @@ const routes = [
     component: Teams
   },
   {
-    path: '/teams/:id',
+    path: '/teams/:shortName',
     name: 'team',
     component: Team
+  },
+  {
+    path: '/tournaments/:id',
+    name: 'tournament',
+    component: Tournament
   }
 ]
 

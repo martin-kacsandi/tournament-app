@@ -1,9 +1,10 @@
 <template>
   <div class="teams-container">
+    <h1>Teams</h1>
     <b-container align="right">
-      <b-table class="mt-3" outlined hover :items="items">
+      <b-table class="mt-3" outlined hover :items="items" :fields="fields">
         <template v-slot:cell(name)="data">
-          <a :href="data.value">{{ data.value }}</a>
+          <a :href="data.item.shortName">{{ data.value }}</a>
         </template>
       </b-table>
     </b-container>
@@ -18,6 +19,7 @@ export default {
   name: 'teams',
   data () {
     return {
+      fields: [ 'name' ],
       items: [],
       teams: []
     }
@@ -26,10 +28,11 @@ export default {
     teams: function () {
       this.items = []
       Object.keys(this.teams).forEach(key => {
-        let myitem = {
-          name: Object.values(this.teams)[key].name
+        let item = {
+          name: Object.values(this.teams)[key].name,
+          shortName: `/teams/${(Object.values(this.teams)[key].shortName).toLowerCase()}`
         }
-        this.items.push(myitem)
+        this.items.push(item)
       })
     }
   },
