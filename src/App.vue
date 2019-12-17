@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-nav pills align="right">
+    <b-nav pills align="left">
       <b-nav-item to="/tournaments">
         Tournaments
       </b-nav-item>

@@ -35,6 +35,14 @@
           </div>
         </b-list-group-item>
       </b-list-group>
+      <router-link :to="`${team.shortName}/edit`">
+        <b-button class="button" variant="primary" >Edit</b-button>
+      </router-link>
+      <b-button class="button" variant="danger" v-b-modal.modal-1>Delete</b-button>
+      <b-modal id="modal-1" title="BootstrapVue" @ok="deleteTeam">
+        <p class="my-4">Are you sure you want to delete this team?</p>
+        <h2>{{this.team.name}}</h2>
+      </b-modal>
     </b-container>
   </div>
 </template>
@@ -51,15 +59,24 @@ export default {
   },
   created () {
     let shortName = this.$route.params.shortName
-    let query = db.collection('teams').where('shortName', '==', shortName.toUpperCase()).get().then(querySnapshot => {
+    let query = db.collection('teams').where('shortName', '==', shortName).get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
         this.team = {
+          id: doc.id,
           name: doc.data().name,
           players: doc.data().players,
           shortName: doc.data().shortName
         }
       })
     })
+  },
+  methods: {
+    deleteTeam: function () {
+      let self = this
+      db.collection('teams').doc(self.team.id).delete().then(() => {
+        self.$router.push('/teams')
+      })
+    }
   }
 }
 </script>
@@ -75,5 +92,9 @@ export default {
     .value{
       font-size: 20px;
     }
+  }
+
+  .button{
+    margin: 20px 10px;
   }
 </style>

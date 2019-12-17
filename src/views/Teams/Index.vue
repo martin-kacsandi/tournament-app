@@ -8,7 +8,9 @@
         </template>
       </b-table>
     </b-container>
-    <b-button variant="success">Add New Team</b-button>
+    <router-link to="teams/create">
+      <b-button variant="success" >Add New Team</b-button>
+    </router-link>
   </div>
 </template>
 
@@ -28,7 +30,7 @@ export default {
       querySnapshot.forEach(doc => {
         const data = {
           name: doc.data().name,
-          shortName: `/teams/${(doc.data().shortName).toLowerCase()}`
+          shortName: `/teams/${doc.data().shortName}`
         }
         this.items.push(data)
       })
