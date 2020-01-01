@@ -36,10 +36,10 @@
         </b-list-group-item>
       </b-list-group>
       <router-link :to="`${team.shortName}/edit`">
-        <b-button class="button" variant="primary" >Edit</b-button>
+        <b-button class="button" variant="primary">Edit</b-button>
       </router-link>
       <b-button class="button" variant="danger" v-b-modal.modal-1>Delete</b-button>
-      <b-modal id="modal-1" title="BootstrapVue" @ok="deleteTeam">
+      <b-modal id="modal-1" title="Deleting team" @ok="deleteTeam">
         <p class="my-4">Are you sure you want to delete this team?</p>
         <h2>{{this.team.name}}</h2>
       </b-modal>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { db } from '../../firebase/db'
+import { db } from '@/firebase/db'
 
 export default {
   name: 'team',
