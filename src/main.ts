@@ -5,7 +5,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import BootstrapVue from 'bootstrap-vue'
-import Vuelidate from 'vuelidate'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
 
 import 'firebase/firestore'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -13,7 +13,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(firestorePlugin)
 Vue.use(BootstrapVue)
-Vue.use(Vuelidate)
+Vue.component('ValidationProvider', ValidationProvider)
+Vue.component('ValidationObserver', ValidationObserver)
 
 Vue.config.productionTip = false
 

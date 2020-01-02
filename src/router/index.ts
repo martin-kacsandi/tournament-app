@@ -22,6 +22,11 @@ const routes = [
     component: CreateTournament
   },
   {
+    path: '/tournaments/:id/edit',
+    name: 'tournament_edit',
+    component: CreateTournament
+  },
+  {
     path: '/teams',
     name: 'teams',
     component: Teams

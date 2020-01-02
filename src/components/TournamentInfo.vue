@@ -24,18 +24,20 @@
     <a :href="'//' + tournament.link" target="_blank">
       <b-button class="button">Watch</b-button>
     </a>
-    <router-link to="/">
+    <router-link :to="'/tournaments/' + tournament.name + '/edit'">
       <b-button class="button" variant="primary">Edit</b-button>
     </router-link>
     <b-button class="button" variant="danger" v-b-modal.modal-1>Delete</b-button>
     <b-modal id="modal-1" title="Deleting team" @ok="deleteTournament">
-      <p class="my-4">Are you sure you want to delete this team?</p>
+      <p class="my-4">Are you sure you want to delete this tournament?</p>
       <h2>{{this.tournament.name}}</h2>
     </b-modal>
   </b-container>
 </template>
 
 <script>
+import { db } from '@/firebase/db'
+
 export default {
   props: ['tournament'],
   data () {
