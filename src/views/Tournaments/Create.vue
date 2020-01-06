@@ -8,23 +8,19 @@
           <b-form-group label="Name" label-for="nameInput">
             <ValidationProvider rules="required" v-slot="v">
               <b-form-input
-              name="nameInput"
-              v-model="name"
-              :state="v.validated ? v.valid : null"
-              aria-describedby="validationName"
+                name="nameInput"
+                v-model="name"
+                :state="v.validated ? v.valid : null"
+                aria-describedby="validationName"
               ></b-form-input>
               <b-form-invalid-feedback id="validationName">{{ v.errors[0] }}</b-form-invalid-feedback>
             </ValidationProvider>
           </b-form-group>
 
           <b-form-group label="Private" label-for="privateInput">
-            <ValidationProvider rules="" vid="isPrivate" v-slot="x">
-              <b-form-checkbox
-                v-model="isPrivate"
-                name="privateInput"
-                switch
-              ></b-form-checkbox>
-              </ValidationProvider>
+            <ValidationProvider rules vid="isPrivate" v-slot="x">
+              <b-form-checkbox v-model="isPrivate" name="privateInput" switch></b-form-checkbox>
+            </ValidationProvider>
           </b-form-group>
 
           <b-form-group label="Password" label-for="passwordInput" v-if="isPrivate">
@@ -43,26 +39,30 @@
           <b-form-group label="Date" label-for="dateInput">
             <ValidationProvider rules="required" v-slot="v">
               <flatPickr
-              :class="{'form-date': true, 'invalid': v.errors.length}"
-              v-model="date"
-              :config="fp_config"
-              :state="v.validated ? v.valid : null"
-              placeholder="Select date"
-              aria-describedby="validationDate"
+                :class="{'form-date': true, 'invalid': v.errors.length}"
+                v-model="date"
+                :config="fp_config"
+                :state="v.validated ? v.valid : null"
+                placeholder="Select date"
+                aria-describedby="validationDate"
               ></flatPickr>
-              <span class="errror-message" v-if="v.errors.length" id="validationDate">This field is required.</span>
+              <span
+                class="errror-message"
+                v-if="v.errors.length"
+                id="validationDate"
+              >This field is required.</span>
             </ValidationProvider>
           </b-form-group>
 
           <b-form-group label="Stream link" label-for="linkInput">
             <ValidationProvider rules="required" v-slot="v">
               <b-form-input
-              name="linkInput"
-              v-model="link"
-              :state="v.validated ? v.valid : null"
-              aria-describedby="validationLink"
-            ></b-form-input>
-            <b-form-invalid-feedback id="validationLink">{{ v.errors[0] }}</b-form-invalid-feedback>
+                name="linkInput"
+                v-model="link"
+                :state="v.validated ? v.valid : null"
+                aria-describedby="validationLink"
+              ></b-form-input>
+              <b-form-invalid-feedback id="validationLink">{{ v.errors[0] }}</b-form-invalid-feedback>
             </ValidationProvider>
           </b-form-group>
 
@@ -74,45 +74,45 @@
                 <h3>Match 1</h3>
                 <ValidationProvider rules="required" v-slot="v">
                   <b-form-select
-                  v-model="matches.game1.team1"
-                  aria-describedby="validationM1T1"
-                  :options="teams"
-                  :state="v.validated ? v.valid : null"
-                ></b-form-select>
-                <b-form-invalid-feedback id="validationM1T1">Select a team.</b-form-invalid-feedback>
+                    v-model="matches.game1.team1"
+                    aria-describedby="validationM1T1"
+                    :options="teams"
+                    :state="v.validated ? v.valid : null"
+                  ></b-form-select>
+                  <b-form-invalid-feedback id="validationM1T1">Select a team.</b-form-invalid-feedback>
                 </ValidationProvider>
 
                 <h4>VS</h4>
                 <ValidationProvider rules="required" v-slot="v">
                   <b-form-select
-                  v-model="matches.game1.team2"
-                  aria-describedby="validationM1T2"
-                  :options="teams"
-                  :state="v.validated ? v.valid : null"
-                ></b-form-select>
-                <b-form-invalid-feedback id="validationM1T2">Select a team.</b-form-invalid-feedback>
+                    v-model="matches.game1.team2"
+                    aria-describedby="validationM1T2"
+                    :options="teams"
+                    :state="v.validated ? v.valid : null"
+                  ></b-form-select>
+                  <b-form-invalid-feedback id="validationM1T2">Select a team.</b-form-invalid-feedback>
                 </ValidationProvider>
               </b-col>
               <b-col align="center">
                 <h3>Match 2</h3>
                 <ValidationProvider rules="required" v-slot="v">
                   <b-form-select
-                  v-model="matches.game2.team1"
-                  aria-describedby="validationM2T1"
-                  :options="teams"
-                  :state="v.validated ? v.valid : null"
-                ></b-form-select>
-                <b-form-invalid-feedback id="validationM2T1">Select a team.</b-form-invalid-feedback>
+                    v-model="matches.game2.team1"
+                    aria-describedby="validationM2T1"
+                    :options="teams"
+                    :state="v.validated ? v.valid : null"
+                  ></b-form-select>
+                  <b-form-invalid-feedback id="validationM2T1">Select a team.</b-form-invalid-feedback>
                 </ValidationProvider>
                 <h4>VS</h4>
                 <ValidationProvider rules="required" v-slot="v">
                   <b-form-select
-                  v-model="matches.game2.team2"
-                  aria-describedby="validationM1T1"
-                  :options="teams"
-                  :state="v.validated ? v.valid : null"
-                ></b-form-select>
-                <b-form-invalid-feedback id="validationM2T2">Select a team.</b-form-invalid-feedback>
+                    v-model="matches.game2.team2"
+                    aria-describedby="validationM1T1"
+                    :options="teams"
+                    :state="v.validated ? v.valid : null"
+                  ></b-form-select>
+                  <b-form-invalid-feedback id="validationM2T2">Select a team.</b-form-invalid-feedback>
                 </ValidationProvider>
               </b-col>
             </b-row>

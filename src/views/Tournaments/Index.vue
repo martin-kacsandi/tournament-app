@@ -25,46 +25,49 @@
   </div>
 </template>
 
-<script>
-import { db } from '@/firebase/db'
-import * as moment from 'moment'
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 
-export default {
-  name: 'tournaments',
-  data () {
-    return {
-      fields: [ 'name', 'date' ],
-      items: [],
-      submittedPassword: '',
-      selectedItem: null,
-      wrongPassword: false
+import { db } from '@/firebase/db'
+import { Tournament } from '@/types'
+import moment from 'moment'
+
+@Component
+export default class Tournaments extends Vue {
+  fields: string[] = [ 'name', 'date' ];
+  items:Tournament[] = [];
+  submittedPassword: string = '';
+  selectedItem: Tournament = new Tournament('', '', '', '', false);
+  wrongPassword: boolean = false;
+
+  checkPassword (bvModalEvt: any) {
+    bvModalEvt.preventDefault()
+    if (this.selectedItem.password === this.submittedPassword) {
+      this.$router.push(`tournaments/${this.selectedItem.name}`)
+    } else {
+      this.wrongPassword = true
     }
-  },
-  methods: {
-    checkPassword: function (bvModalEvt) {
-      bvModalEvt.preventDefault()
-      if (this.selectedItem.password === this.submittedPassword) {
-        this.$router.push(`tournaments/${this.selectedItem.name}`)
-      } else {
-        this.wrongPassword = true
-      }
-    },
-    sendItem: function (item) {
-      this.selectedItem = item
-    }
-  },
+  }
+
+  sendItem (item: Tournament) {
+    this.selectedItem = item
+  }
+
   created () {
-    const self = this
+    console.log('created')
     db.collection('tournaments').get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        const data = {
-          name: doc.data().name,
-          private: doc.data().private,
-          date: moment(doc.data().date.toDate()).format('YYYY. MM. DD. hh:mm'),
-          password: doc.data().password,
-          route: `/tournaments/${doc.data().name}`
-        }
-        self.items.push(data)
+        const data = new Tournament(
+          doc.data().name,
+          doc.data().link,
+          moment(doc.data().date.toDate()).format('YYYY. MM. DD. hh:mm'),
+          doc.data().password,
+          doc.data().private,
+          {},
+          `/tournaments/${doc.data().name}`)
+        console.log(data)
+        this.items.push(data)
       })
     })
   }
