@@ -47,36 +47,34 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { db } from '@/firebase/db'
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { Team, Players } from '@/types'
 
-export default {
-  name: 'team',
-  data () {
-    return {
-      team: {}
-    }
-  },
+@Component
+export default class TeamDetails extends Vue {
+  team: Team = new Team();
+
   created () {
     let shortName = this.$route.params.shortName
     let query = db.collection('teams').where('shortName', '==', shortName).get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        this.team = {
-          id: doc.id,
-          name: doc.data().name,
-          players: doc.data().players,
-          shortName: doc.data().shortName
-        }
+        this.team = new Team(
+          doc.id,
+          doc.data().name,
+          doc.data().shortName,
+          doc.data().players as Players
+        )
       })
     })
-  },
-  methods: {
-    deleteTeam: function () {
-      let self = this
-      db.collection('teams').doc(self.team.id).delete().then(() => {
-        self.$router.push('/teams')
-      })
-    }
+  }
+
+  deleteTeam () {
+    db.collection('teams').doc(this.team.id).delete().then(() => {
+      this.$router.push('/teams')
+    })
   }
 }
 </script>

@@ -146,13 +146,21 @@
   </b-container>
 </template>
 
-<script>
-export default {
-  props: ['matches', 'link'],
-  data () {
-    return {
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { Matches } from '@/types'
+
+@Component({
+  name: 'bracket',
+  props: {
+    matches: {
+      type: Object,
+      required: true
     }
   }
+})
+export default class Bracket extends Vue {
 }
 </script>
 

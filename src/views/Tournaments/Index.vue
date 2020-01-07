@@ -28,9 +28,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import { Tournament, Matches } from '@/types'
 
 import { db } from '@/firebase/db'
-import { Tournament } from '@/types'
 import moment from 'moment'
 
 @Component
@@ -55,7 +55,6 @@ export default class Tournaments extends Vue {
   }
 
   created () {
-    console.log('created')
     db.collection('tournaments').get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
         const data = new Tournament(
@@ -64,10 +63,10 @@ export default class Tournaments extends Vue {
           moment(doc.data().date.toDate()).format('YYYY. MM. DD. hh:mm'),
           doc.data().password,
           doc.data().private,
-          {},
+          doc.data().matches,
           `/tournaments/${doc.data().name}`)
-        console.log(data)
         this.items.push(data)
+        console.log(doc.data().matches)
       })
     })
   }

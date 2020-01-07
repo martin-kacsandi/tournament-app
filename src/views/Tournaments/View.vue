@@ -13,38 +13,41 @@
   </div>
 </template>
 
-<script>
-import { db } from '@/firebase/db'
-import * as moment from 'moment'
-import TournamentInfo from '@/components/TournamentInfo'
-import Bracket from '@/components/Bracket'
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { Tournament } from '@/types'
 
-export default {
-  name: 'team',
-  data () {
-    return {
-      tournament: {}
-    }
-  },
+import { db } from '@/firebase/db'
+import moment from 'moment'
+import TournamentInfo from '@/components/TournamentInfo.vue' //  Why??
+import Bracket from '@/components/Bracket.vue' // <----
+
+@Component({
+  components: {
+    TournamentInfo,
+    Bracket
+  }
+})
+export default class TournamentDetails extends Vue {
+  tournament: Tournament = new Tournament();
+
   created () {
     let name = this.$route.params.id
     db.collection('tournaments').where('name', '==', name).get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        this.tournament = {
-          id: doc.id,
-          name: doc.data().name,
-          password: doc.data().password,
-          private: doc.data().private,
-          link: doc.data().link,
-          date: moment(doc.data().date.toDate()).format('YYYY. MM. DD. hh:mm'),
-          matches: doc.data().matches
-        }
+        this.tournament = new Tournament(
+          doc.data().name,
+          doc.data().link,
+          moment(doc.data().date.toDate()).format('YYYY. MM. DD. hh:mm'),
+          doc.data().password,
+          doc.data().private,
+          doc.data().matches,
+          '',
+          doc.id
+        )
       })
     })
-  },
-  components: {
-    TournamentInfo,
-    Bracket
   }
 }
 </script>
