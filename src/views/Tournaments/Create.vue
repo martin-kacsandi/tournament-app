@@ -158,7 +158,7 @@ export default class TournamentCreate extends Vue {
   };
 
   submitTournament () {
-    this.$refs.tournamentForm.validate().then((success: boolean) => {
+    this.$refs.tournamentForm.validate(rules).then((success: boolean) => {
       if (!success) {
         return
       }
@@ -180,9 +180,10 @@ export default class TournamentCreate extends Vue {
   }
 
   addTournament () {
+    let date: Date = moment(this.tournament.date).toDate()
     db.collection('tournaments').add({
       name: this.tournament.name,
-      date: firebase.firestore.Timestamp.fromDate((this.tournament.date) as any),
+      date: firebase.firestore.Timestamp.fromDate(date),
       link: this.tournament.link,
       password: this.tournament.password,
       private: this.tournament.isPrivate,
@@ -204,6 +205,7 @@ export default class TournamentCreate extends Vue {
       this.$router.push('/tournaments/' + this.tournament.name)
     })
   }
+
   created () {
     db.collection('teams').get().then(querySnapshot => {
       querySnapshot.forEach(doc => {

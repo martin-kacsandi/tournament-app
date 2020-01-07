@@ -30,10 +30,13 @@
       </div>
       <div class="br-row">
         <div class="br-col" :class="{active: matches.game1.inProgress}">
-          <b-button
-            variant="primary"
-            v-if="!matches.game1.isFinished && matches.game1.inProgress"
-          >View</b-button>
+          <template v-if="!matches.game1.isFinished && matches.game1.inProgress">
+            <a :href="`/tournaments/${this.tournamentName}/game1`">
+              <b-button
+              variant="primary"
+              >View</b-button>
+            </a>
+          </template>
         </div>
         <div class="br-col brl hr vt vb">
           <div class="line tl"></div>
@@ -82,7 +85,7 @@
           <div class="line br"></div>
         </div>
         <div class="br-col match winner">
-          <div class="name">{{matches.winner}}</div>
+          <div class="name">{{matches.game3.winner}}</div>
         </div>
       </div>
       <div class="br-row">
@@ -149,18 +152,16 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import { Prop } from 'vue-property-decorator'
 import { Matches } from '@/types'
 
-@Component({
-  name: 'bracket',
-  props: {
-    matches: {
-      type: Object,
-      required: true
-    }
-  }
-})
+@Component
 export default class Bracket extends Vue {
+  @Prop({})
+  matches!: Matches
+
+  @Prop({})
+  tournamentName!: string
 }
 </script>
 

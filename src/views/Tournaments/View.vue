@@ -6,7 +6,7 @@
           <TournamentInfo :tournament="tournament"></TournamentInfo>
         </b-col>
         <b-col cols="9">
-          <Bracket :matches="tournament.matches" :link="tournament.link"></Bracket>
+          <Bracket :matches="tournament.matches" :link="tournament.link" :tournamentName="tournament.name"></Bracket>
         </b-col>
       </b-row>
     </b-container>

@@ -6,11 +6,11 @@
         <template v-slot:cell(name)="data">
           <a
             href="#"
-            v-if="data.item.private"
+            v-if="data.item.isPrivate"
             v-b-modal.modal-1
             @click="sendItem(data.item)"
           >{{ data.value }}</a>
-          <a :href="data.item.route" v-else>{{ data.value }}</a>
+          <a v-else :href="data.item.route">{{ data.value }}</a>
         </template>
       </b-table>
     </b-container>

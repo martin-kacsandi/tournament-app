@@ -6,6 +6,7 @@ import Teams from '../views/Teams/Index.vue'
 import Team from '../views/Teams/View.vue'
 import CreateTeam from '../views/Teams/Create.vue'
 import CreateTournament from '../views/Tournaments/Create.vue'
+import Match from '../views/Match.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,11 @@ const routes = [
     path: '/tournaments/:id/edit',
     name: 'tournament_edit',
     component: CreateTournament
+  },
+  {
+    path: '/tournaments/:id/:match',
+    name: 'match_view',
+    component: Match
   },
   {
     path: '/teams',

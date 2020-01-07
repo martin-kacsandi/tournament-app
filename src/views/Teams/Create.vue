@@ -4,7 +4,7 @@
       <h1 v-if="$route.matched[0].name == 'team_create'">Create new team</h1>
       <h1 v-else>Edit team</h1>
       <ValidationObserver v-slot="{ invalid }" ref="teamForm">
-        <form id="createTeam">
+        <form id="createTeam" @submit.prevent="submitTeam">
           <b-form-group label="Name" label-for="nameInput">
             <ValidationProvider rules="required" v-slot="v">
               <b-form-input
@@ -92,7 +92,7 @@
               <b-form-invalid-feedback id="sppV">{{v.errors[0]}}</b-form-invalid-feedback>
             </ValidationProvider>
           </b-form-group>
-          <b-button class="button" @click="submitTeam" variant="success">Save team</b-button>
+          <b-button type="submit" class="button" variant="success">Save team</b-button>
           <router-link to="/teams">
             <b-button class="button" variant="outline-primary">Cancel</b-button>
           </router-link>
@@ -102,69 +102,72 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+
 import { db } from '@/firebase/db'
+import { ValidationObserver, validate } from 'vee-validate'
 import * as rules from '@/rules/rules'
 
-export default {
-  data () {
-    return {
-      id: '',
-      name: '',
-      shortName: '',
-      top: '',
-      jgl: '',
-      mid: '',
-      adc: '',
-      spp: ''
-    }
-  },
-  methods: {
-    submitTeam: function () {
-      this.$refs.teamForm.validate().then((success) => {
-        if (!success) {
-          return
-        }
-        if (this.$route.matched[0].name === 'tournament_create') {
-          this.addTeam()
-        } else if (this.$route.matched[0].name === 'tournament_edit') {
-          this.updateTeam()
-        }
-      })
-    },
-    addTeam: function () {
-      let self = this
-      db.collection('teams').add({
-        name: this.name,
-        shortName: this.shortName,
-        players: {
-          top: this.top,
-          jgl: this.jgl,
-          mid: this.mid,
-          adc: this.adc,
-          spp: this.spp
-        }
-      }).then(() => {
-        self.$router.push('/teams/' + self.shortName)
-      })
-    },
-    updateTeam: function () {
-      let self = this
-      db.collection('teams').doc(self.id).update({
-        name: self.name,
-        shortName: self.shortName,
-        players: {
-          top: self.top,
-          jgl: self.jgl,
-          mid: self.mid,
-          adc: self.adc,
-          spp: self.spp
-        }
-      }).then(() => {
-        self.$router.push('/teams/' + self.shortName)
-      })
-    }
-  },
+@Component
+export default class TeamCreate extends Vue {
+  id: string = ''
+  name: string = ''
+  shortName: string = ''
+  top: string = ''
+  jgl: string = ''
+  mid: string = ''
+  adc: string = ''
+  spp: string = ''
+  $refs!: {
+    teamForm: InstanceType<typeof ValidationObserver>;
+  }
+
+  submitTeam () {
+    this.$refs.teamForm.validate(rules).then((success) => {
+      if (!success) {
+        return
+      }
+      if (this.$route.matched[0].name === 'team_create') {
+        this.addTeam()
+      } else if (this.$route.matched[0].name === 'team_edit') {
+        this.updateTeam()
+      }
+    })
+  }
+
+  addTeam () {
+    db.collection('teams').add({
+      name: this.name,
+      shortName: this.shortName,
+      players: {
+        top: this.top,
+        jgl: this.jgl,
+        mid: this.mid,
+        adc: this.adc,
+        spp: this.spp
+      }
+    }).then(() => {
+      this.$router.push('/teams/' + this.shortName)
+    })
+  }
+
+  updateTeam () {
+    db.collection('teams').doc(this.id).update({
+      name: this.name,
+      shortName: this.shortName,
+      players: {
+        top: this.top,
+        jgl: this.jgl,
+        mid: this.mid,
+        adc: this.adc,
+        spp: this.spp
+      }
+    }).then(() => {
+      this.$router.push('/teams/' + this.shortName)
+    })
+  }
   created () {
     let routerShortName = this.$route.params.shortName
     if (routerShortName) {
