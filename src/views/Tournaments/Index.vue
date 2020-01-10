@@ -1,24 +1,24 @@
 <template>
   <div class="tournaments-container">
-    <h1>Tournaments</h1>
-    <b-container>
+    <b-container align="left">
+      <h1>Tournaments</h1>
       <b-table class="mt-3" outlined hover :items="items" :fields="fields">
         <template v-slot:cell(name)="data">
           <a
             href="#"
             v-if="data.item.isPrivate"
+            @click="itemClicked(data.item)"
             v-b-modal.modal-1
-            @click="sendItem(data.item)"
           >{{ data.value }}</a>
           <a v-else :href="data.item.route">{{ data.value }}</a>
         </template>
       </b-table>
+       <router-link to="/tournaments/create">
+        <b-button variant="primary">Add New Tournament</b-button>
+      </router-link>
     </b-container>
-    <router-link to="/tournaments/create">
-      <b-button variant="success">Add New Tournament</b-button>
-    </router-link>
     <b-modal id="modal-1" title="Password" @ok="checkPassword">
-      <p class="my-4">Please enter the password to this championship</p>
+      <p class="my-4">Please enter the tournament's password</p>
       <b-input type="password" v-model="submittedPassword"></b-input>
       <p class="wrong-password-p" v-if="wrongPassword">Wrong Password</p>
     </b-modal>
@@ -50,7 +50,7 @@ export default class Tournaments extends Vue {
     }
   }
 
-  sendItem (item: Tournament) {
+  itemClicked (item: Tournament) {
     this.selectedItem = item
   }
 
@@ -60,13 +60,12 @@ export default class Tournaments extends Vue {
         const data = new Tournament(
           doc.data().name,
           doc.data().link,
-          moment(doc.data().date.toDate()).format('YYYY. MM. DD. hh:mm'),
+          moment(doc.data().date.toDate()).format('YYYY. MM. DD.'),
           doc.data().password,
           doc.data().private,
           doc.data().matches,
           `/tournaments/${doc.data().name}`)
         this.items.push(data)
-        console.log(doc.data().matches)
       })
     })
   }

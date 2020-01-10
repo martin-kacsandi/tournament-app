@@ -47,7 +47,7 @@
                 aria-describedby="validationDate"
               ></flatPickr>
               <span
-                class="errror-message"
+                class="error-message"
                 v-if="v.errors.length"
                 id="validationDate"
               >This field is required.</span>
@@ -66,59 +66,70 @@
             </ValidationProvider>
           </b-form-group>
 
-          <h2>Matchups</h2>
+          <h4>Matchups</h4>
 
-          <b-container align="center">
+          <b-container>
             <b-row>
-              <b-col align="center">
-                <h3>Match 1</h3>
-                <ValidationProvider rules="required" v-slot="v">
-                  <b-form-select
+              <b-col>
+                <b-form-group label="Match 1" label-for="t1m1Input">
+                  <ValidationProvider rules="required" v-slot="v">
+                    <b-form-select
+                    name="t1m1Input"
                     v-model="tournament.matches.game1.team1"
                     aria-describedby="validationM1T1"
                     :options="teams"
                     :state="v.validated ? v.valid : null"
-                  ></b-form-select>
-                  <b-form-invalid-feedback id="validationM1T1">Select a team.</b-form-invalid-feedback>
-                </ValidationProvider>
+                    ></b-form-select>
+                    <b-form-invalid-feedback id="validationM1T1">Select a team.</b-form-invalid-feedback>
+                  </ValidationProvider>
+                </b-form-group>
 
-                <h4>VS</h4>
-                <ValidationProvider rules="required" v-slot="v">
-                  <b-form-select
+                <b-form-group label="VS" label-for="t1m2Input">
+                  <ValidationProvider rules="required" v-slot="v">
+                    <b-form-select
+                    name="t1m2Input"
                     v-model="tournament.matches.game1.team2"
                     aria-describedby="validationM1T2"
                     :options="teams"
                     :state="v.validated ? v.valid : null"
-                  ></b-form-select>
-                  <b-form-invalid-feedback id="validationM1T2">Select a team.</b-form-invalid-feedback>
-                </ValidationProvider>
+                    ></b-form-select>
+                    <b-form-invalid-feedback id="validationM1T2">Select a team.</b-form-invalid-feedback>
+                  </ValidationProvider>
+                </b-form-group>
               </b-col>
-              <b-col align="center">
-                <h3>Match 2</h3>
-                <ValidationProvider rules="required" v-slot="v">
-                  <b-form-select
+              <b-col>
+                <b-form-group label="Match 2" label-for="t2m1Input">
+                  <ValidationProvider rules="required" v-slot="v">
+                    <b-form-select
+                    name="t2m1Input"
                     v-model="tournament.matches.game2.team1"
                     aria-describedby="validationM2T1"
                     :options="teams"
                     :state="v.validated ? v.valid : null"
-                  ></b-form-select>
-                  <b-form-invalid-feedback id="validationM2T1">Select a team.</b-form-invalid-feedback>
-                </ValidationProvider>
-                <h4>VS</h4>
-                <ValidationProvider rules="required" v-slot="v">
-                  <b-form-select
+                    ></b-form-select>
+                    <b-form-invalid-feedback id="validationM2T1">Select a team.</b-form-invalid-feedback>
+                  </ValidationProvider>
+                </b-form-group>
+                <b-form-group label="VS" label-for="t2m1Input">
+                  <ValidationProvider rules="required" v-slot="v">
+                    <b-form-select
+                    name="t2m2Input"
                     v-model="tournament.matches.game2.team2"
                     aria-describedby="validationM1T1"
                     :options="teams"
                     :state="v.validated ? v.valid : null"
-                  ></b-form-select>
-                  <b-form-invalid-feedback id="validationM2T2">Select a team.</b-form-invalid-feedback>
-                </ValidationProvider>
+                    ></b-form-select>
+                    <b-form-invalid-feedback id="validationM2T2">Select a team.</b-form-invalid-feedback>
+                  </ValidationProvider>
+                </b-form-group>
               </b-col>
             </b-row>
-            <b-button variant="primary" @click="randomTeams">Random</b-button>
+            <b-row>
+              <b-col align="right">
+                <b-button variant="primary" @click="randomTeams">Random</b-button>
+              </b-col>
+            </b-row>
           </b-container>
-
           <b-button type="submit" class="button" variant="success">Save team</b-button>
           <router-link :to="'/tournaments/' + tournament.name">
             <b-button class="button" variant="outline-primary">Cancel</b-button>
@@ -224,8 +235,6 @@ export default class TournamentCreate extends Vue {
           this.tournament.isPrivate = doc.data().private
           this.tournament.password = doc.data().password
           this.tournament.matches = doc.data().matches
-
-          console.log(doc.data().date.toDate())
         })
       })
     }
@@ -240,10 +249,6 @@ export default class TournamentCreate extends Vue {
     margin: 0;
   }
 
-  b-button{
-    margin: 20px 10px;
-  }
-
   .form-date{
     display: block;
     width: 100%;
@@ -253,17 +258,17 @@ export default class TournamentCreate extends Vue {
     font-weight: 400;
     line-height: 1.5;
     color: #495057;
-    background-color: #fff;
+    background-color: transparent;
     background-clip: padding-box;
     border: 1px solid #ced4da;
-    border-radius: 0.25rem;
+    border-radius: 0;
 
     &.invalid{
       border-color: #dc3545;
     }
   }
 
-  .errror-message{
+  .error-message{
     display: block;
     width: 100%;
     margin-top: 0.25rem;

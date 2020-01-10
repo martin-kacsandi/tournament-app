@@ -1,16 +1,17 @@
 <template>
   <div class="teams-container">
-    <h1>Teams</h1>
-    <b-container align="right">
+    <b-container align="left">
+      <h1>Teams</h1>
       <b-table class="mt-3" outlined hover :items="items" :fields="fields">
         <template v-slot:cell(name)="data">
           <a :href="data.item.route">{{ data.value }}</a>
         </template>
       </b-table>
+      <router-link to="teams/create">
+        <b-button variant="primary" >Add Team
+        </b-button>
+      </router-link>
     </b-container>
-    <router-link to="teams/create">
-      <b-button variant="success" >Add New Team</b-button>
-    </router-link>
   </div>
 </template>
 
@@ -43,3 +44,12 @@ export default class Teams extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.tournaments-container{
+  h1{
+    margin-bottom: 1em;
+    align-self:flex-start;
+  }
+}
+</style>

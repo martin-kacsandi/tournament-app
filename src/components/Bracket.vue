@@ -29,14 +29,7 @@
         <div class="br-col"></div>
       </div>
       <div class="br-row">
-        <div class="br-col" :class="{active: matches.game1.inProgress}">
-          <template v-if="!matches.game1.isFinished && matches.game1.inProgress">
-            <a :href="`/tournaments/${this.tournamentName}/game1`">
-              <b-button
-              variant="primary"
-              >View</b-button>
-            </a>
-          </template>
+        <div class="br-col">
         </div>
         <div class="br-col brl hr vt vb">
           <div class="line tl"></div>

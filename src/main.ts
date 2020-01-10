@@ -8,8 +8,6 @@ import BootstrapVue from 'bootstrap-vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 
 import 'firebase/firestore'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(firestorePlugin)
 Vue.use(BootstrapVue)

@@ -1,0 +1,15 @@
+$primary: #e6214c;
+$success: #2fcf85;
+$background: #1b1b1b;
+
+option{
+  background-color: $background;
+
+  &:active{
+    background-color: $primary;
+  }
+}
+
+h1{
+  margin-bottom: 1em;
+}
