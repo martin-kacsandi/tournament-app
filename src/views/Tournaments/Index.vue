@@ -10,7 +10,7 @@
             @click="itemClicked(data.item)"
             v-b-modal.modal-1
           >{{ data.value }}</a>
-          <a v-else :href="data.item.route">{{ data.value }}</a>
+          <router-link v-else :to="data.item.route">{{ data.value }}</router-link>
         </template>
       </b-table>
        <router-link to="/tournaments/create">
