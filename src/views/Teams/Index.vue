@@ -4,7 +4,7 @@
       <h1>Teams</h1>
       <b-table class="mt-3" outlined hover :items="items" :fields="fields">
         <template v-slot:cell(name)="data">
-          <a :href="data.item.route">{{ data.value }}</a>
+          <router-link :to="data.item.route">{{ data.value }}</router-link>
         </template>
       </b-table>
       <router-link to="teams/create">
